@@ -50667,11 +50667,11 @@ export default {
   "custom": {
     "name": "custom",
     "routes": {
-      "/scrape": {
-        "path": "/scrape",
-        "example": "/custom/scrape?url=https%3A%2F%2Fexample.org%2Fblog&item=article&title=h2%20a&link=h2%20a",
+      "/scrape/:url64": {
+        "path": "/scrape/:url64",
+        "example": "/custom/scrape/aHR0cHM6Ly9leGFtcGxlLm9yZy9ibG9n?item=article&title=h2%20a&link=h2%20a",
         "parameters": {
-          "url": "Target listing page URL, absolute http(s), public hosts only",
+          "url64": "base64url-encoded target listing page URL, absolute http(s), public hosts only",
           "item": "CSS selector matching every entry element on the page",
           "title": "Optional CSS selector relative to item for the title, defaults to the item text",
           "link": "Optional CSS selector relative to item for the link, defaults to a[href]",

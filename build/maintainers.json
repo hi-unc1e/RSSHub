@@ -3640,7 +3640,7 @@
     "p3psi-boo",
     "nczitzk"
   ],
-  "/custom/scrape": [
+  "/custom/scrape/:url64": [
     "hi-unc1e"
   ],
   "/cybersecurityventures/news/:category?": [

@@ -827,7 +827,7 @@ export type RoutePath =
   | `/curius/links/:name`
   | `/cursor/blog/:topic?/:locale?`
   | `/cursor/changelog/:locale?`
-  | `/custom/scrape`
+  | `/custom/scrape/:url64`
   | `/cw/author/:channel`
   | `/cw/master/:channel`
   | `/cw/sub/:channel`
