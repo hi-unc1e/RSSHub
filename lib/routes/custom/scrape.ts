@@ -9,10 +9,10 @@ const PRIVATE_172 = /^172\.(1[6-9]|2\d|3[01])\./;
 const CGNAT = /^100\.(6[4-9]|[7-9]\d|1[01]\d|12[0-7])\./;
 
 export const route: Route = {
-    path: '/scrape',
-    example: '/custom/scrape?url=https%3A%2F%2Fexample.org%2Fblog&item=article&title=h2%20a&link=h2%20a',
+    path: '/scrape/:url64',
+    example: '/custom/scrape/aHR0cHM6Ly9leGFtcGxlLm9yZy9ibG9n?item=article&title=h2%20a&link=h2%20a',
     parameters: {
-        url: 'Target listing page URL, absolute http(s), public hosts only',
+        url64: 'base64url-encoded target listing page URL, absolute http(s), public hosts only',
         item: 'CSS selector matching every entry element on the page',
         title: 'Optional CSS selector relative to item for the title, defaults to the item text',
         link: 'Optional CSS selector relative to item for the link, defaults to a[href]',
@@ -37,9 +37,14 @@ export const route: Route = {
 
 async function handler(ctx) {
     const q = ctx.req.query();
-    const target = q.url;
+    let target;
+    try {
+        target = Buffer.from(ctx.req.param('url64'), 'base64url').toString('utf8');
+    } catch {
+        throw new Error('invalid base64url encoding of the target URL');
+    }
     if (!target || !/^https?:\/\//i.test(target)) {
-        throw new Error('provide ?url=<absolute http(s) url of the listing page>');
+        throw new Error('decoded target must be an absolute http(s) URL');
     }
     const { hostname } = new URL(target);
     if (PRIVATE_HOST.test(hostname) || PRIVATE_172.test(hostname) || CGNAT.test(hostname)) {
